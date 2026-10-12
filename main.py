@@ -1,3 +1,3 @@
-hereimport os
+import os
 
-print("مرحباً يوسف! الآلة السحابية أصبحت جاهزة ومستعدة للعمل بنجاح.")
+print("Hello Youcef! The cloud machine is running perfectly.")
