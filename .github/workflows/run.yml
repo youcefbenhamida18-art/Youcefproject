@@ -2,8 +2,8 @@ name: Run Auto Machine
 
 on:
   schedule:
-    - cron: '0 8 * * *' # سيعمل الكود تلقائياً كل يوم الساعة 8 صباحاً
-  workflow_dispatch: # يتيح لك تشغيله يدوياً متى شئت بضغطة زر
+    - cron: '0 8 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,9 +17,5 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Run main script
-        uses: actions/python-script@v5
-        with:
-          script: |
-            import os
-            print("مرحباً! الآلة السحابية تعمل الآن أوتوماتيكياً بنجاح تام.")
+      - name: Run main.py script
+        run: python main.py
