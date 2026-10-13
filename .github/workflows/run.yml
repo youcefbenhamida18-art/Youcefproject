@@ -1,4 +1,4 @@
-herename: Run Auto Machine
+name: Run Auto Machine
 
 on:
   workflow_dispatch:
