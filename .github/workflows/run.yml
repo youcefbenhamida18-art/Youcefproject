@@ -18,7 +18,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install Pillow moviepy
+          pip install pillow moviepy
 
       - name: Run main.py script
         run: python main.py
