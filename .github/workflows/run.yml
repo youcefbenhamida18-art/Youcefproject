@@ -16,10 +16,12 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Install dependencies
+    - name: Install System Dependencies & Python Packages
       run: |
+        sudo apt-get update
+        sudo apt-get install -y ffmpeg libgl1-mesa-glx
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install moviepy Pillow google-api-python-client google-auth-oauthlib google-auth-httplib2
 
     - name: Run main.py script
       env:
