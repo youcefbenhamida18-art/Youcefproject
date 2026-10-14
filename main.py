@@ -1,10 +1,3 @@
-import sys
-import subprocess
-
-print("Installing required packages...")
-subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
-subprocess.check_call([sys.executable, "-m", "pip", "install", "moviepy", "Pillow", "google-api-python-client", "google-auth-oauthlib", "google-auth-httplib2"])
-
 import os
 import json
 from googleapiclient.discovery import build
@@ -42,4 +35,3 @@ def upload_to_youtube(video_file, title, description):
 if __name__ == "__main__":
     vid = generate_video()
     upload_to_youtube(vid, "Daily Riddle #Shorts", "Solve this riddle!")
-
