@@ -7,17 +7,17 @@ from moviepy.editor import TextClip, ColorClip, CompositeVideoClip
 
 def generate_video():
     print("جاري إنشاء فيديو اللغز تلقائياً...")
-    # إنشاء خلفية ملونة للفيديو (مقاس شورتس: عرض 1080 وطول 1920، لمدة 5 ثواني)
+    # إنشاء خلفية ملونة للفيديو (مقاس شورتس: 1080x1920، لمدة 5 ثوانٍ)
     bg = ColorClip(size=(1080, 1920), color=(20, 20, 40), duration=5)
     
-    # إضافة نص اللغز (يمكنك تعديل النص واللون حسب رغبتك)
+    # إضافة نص اللغز
     txt_clip = TextClip("Daily Riddle Challenge!\nCan you solve this?", fontsize=70, color='white', size=(1000, 1800), method='caption')
     txt_clip = txt_clip.set_pos('center').set_duration(5)
     
     # دمج الخلفية مع النص
     video = CompositeVideoClip([bg, txt_clip])
     
-    # حفظ الفيديو الناتج بالاسم المطلوب
+    # حفظ الفيديو الناتج
     output_filename = "output_short.mp4"
     video.write_videofile(output_filename, fps=24, codec='libx264', audio_codec='aac')
     print("تم إنشاء الفيديو بنجاح باسم:", output_filename)
@@ -55,8 +55,8 @@ def upload_to_youtube(video_file, title, description):
     print(f"Video uploaded successfully! Video ID: {response.get('id')}")
 
 if __name__ == "__main__":
-    # الخطوة 1: توليد الفيديو تلقائياً
+    # 1. توليد الفيديو تلقائياً
     video_path = generate_video()
     
-    # الخطوة 2: رفع الفيديو الناتج إلى يوتيوب
+    # 2. رفع الفيديو الناتج إلى يوتيوب
     upload_to_youtube(video_path, "Daily Riddle Challenge! #Shorts", "Can you solve this riddle? Write your answer in the comments!")
