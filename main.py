@@ -1,17 +1,30 @@
 import os
 import json
+from PIL import Image, ImageDraw
+from moviepy.editor import ImageClip, CompositeVideoClip
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from google.oauth2.credentials import Credentials
-from moviepy.editor import TextClip, ColorClip, CompositeVideoClip
 
 def generate_video():
-    print("Generating video...")
-    bg = ColorClip(size=(1080, 1920), color=(20, 20, 40), duration=5)
-    txt_clip = TextClip("Daily Riddle Challenge!\nCan you solve this?", fontsize=70, color='white', size=(1000, 1800), method='caption')
-    txt_clip = txt_clip.set_pos('center').set_duration(5)
-    video = CompositeVideoClip([bg, txt_clip])
-    video.write_videofile("output_short.mp4", fps=24, codec='libx264', audio_codec='aac')
+    print("Generating video frame with Pillow...")
+    # إنشاء خلفية ملونة للشورتز بالمقاسات الصحيحة (1080x1920)
+    img = Image.new('RGB', (1080, 1920), color=(20, 20, 40))
+    d = ImageDraw.Draw(img)
+    
+    # النص الذي سيظهر في الفيديو
+    text = "Daily Riddle Challenge!\nCan you solve this?"
+    
+    # رسم النص على الصورة (بدون الحاجة لبرنامج ImageMagick المعقد)
+    # سيتم رسم النص في المنتصف تقريباً
+    d.text((250, 900), text, fill=(255, 255, 255))
+    
+    img_path = "riddle_frame.png"
+    img.save(img_path)
+    
+    print("Creating video clip from image...")
+    clip = ImageClip(img_path).set_duration(5)
+    clip.write_videofile("output_short.mp4", fps=24, codec='libx264', audio_codec='aac')
     print("Video created successfully!")
     return "output_short.mp4"
 
