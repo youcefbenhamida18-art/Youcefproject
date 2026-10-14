@@ -3,7 +3,14 @@ import json
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from google.oauth2.credentials import Credentials
-from moviepy.editor import TextClip, ColorClip, CompositeVideoClip
+
+# استخدام طريقة آمنة لاستيراد moviepy تتوافق مع كافة الإصدارات
+try:
+    from moviepy.editor import TextClip, ColorClip, CompositeVideoClip
+except ImportError:
+    from moviepy.video.VideoClip import ColorClip
+    from moviepy.video.compositing.CompositeVideoClip import CompositeVideoClip
+    from moviepy.video.video_txt.TextClip import TextClip
 
 def generate_video():
     print("Generating video...")
