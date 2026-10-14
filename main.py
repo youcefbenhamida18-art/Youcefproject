@@ -1,7 +1,7 @@
 import os
 import json
+import subprocess
 from PIL import Image, ImageDraw
-from moviepy.editor import ImageClip, CompositeVideoClip
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 from google.oauth2.credentials import Credentials
@@ -15,16 +15,20 @@ def generate_video():
     # النص الذي سيظهر في الفيديو
     text = "Daily Riddle Challenge!\nCan you solve this?"
     
-    # رسم النص على الصورة (بدون الحاجة لبرنامج ImageMagick المعقد)
-    # سيتم رسم النص في المنتصف تقريباً
+    # رسم النص على الصورة
     d.text((250, 900), text, fill=(255, 255, 255))
     
     img_path = "riddle_frame.png"
     img.save(img_path)
     
-    print("Creating video clip from image...")
-    clip = ImageClip(img_path).set_duration(5)
-    clip.write_videofile("output_short.mp4", fps=24, codec='libx264', audio_codec='aac')
+    print("Converting image to video using ffmpeg...")
+    # تحويل الصورة مباشرة إلى فيديو مدته 5 ثوانٍ باستخدام ffmpeg بدون أي مشاكل
+    cmd = [
+        "ffmpeg", "-loop", "1", "-i", img_path, 
+        "-c:v", "libx264", "-t", "5", "-pix_fmt", "yuv420p", 
+        "-y", "output_short.mp4"
+    ]
+    subprocess.run(cmd, check=True)
     print("Video created successfully!")
     return "output_short.mp4"
 
