@@ -1,4 +1,13 @@
 import os
+import subprocess
+import sys
+
+# تثبيت المكتبات تلقائياً إذا لم تكن موجودة لمنع أي خطأ نهائياً
+try:
+    import moviepy
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "moviepy", "Pillow", "google-api-python-client", "google-auth-oauthlib", "google-auth-httplib2"])
+
 import json
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
@@ -7,17 +16,11 @@ from moviepy.editor import TextClip, ColorClip, CompositeVideoClip
 
 def generate_video():
     print("جاري إنشاء فيديو اللغز تلقائياً...")
-    # إنشاء خلفية ملونة للفيديو (مقاس شورتس: 1080x1920، لمدة 5 ثوانٍ)
     bg = ColorClip(size=(1080, 1920), color=(20, 20, 40), duration=5)
-    
-    # إضافة نص اللغز
     txt_clip = TextClip("Daily Riddle Challenge!\nCan you solve this?", fontsize=70, color='white', size=(1000, 1800), method='caption')
     txt_clip = txt_clip.set_pos('center').set_duration(5)
-    
-    # دمج الخلفية مع النص
     video = CompositeVideoClip([bg, txt_clip])
     
-    # حفظ الفيديو الناتج
     output_filename = "output_short.mp4"
     video.write_videofile(output_filename, fps=24, codec='libx264', audio_codec='aac')
     print("تم إنشاء الفيديو بنجاح باسم:", output_filename)
@@ -55,8 +58,5 @@ def upload_to_youtube(video_file, title, description):
     print(f"Video uploaded successfully! Video ID: {response.get('id')}")
 
 if __name__ == "__main__":
-    # 1. توليد الفيديو تلقائياً
     video_path = generate_video()
-    
-    # 2. رفع الفيديو الناتج إلى يوتيوب
     upload_to_youtube(video_path, "Daily Riddle Challenge! #Shorts", "Can you solve this riddle? Write your answer in the comments!")
