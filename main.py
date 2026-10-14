@@ -1,13 +1,15 @@
-import os
-import subprocess
 import sys
+import subprocess
 
-# تثبيت المكتبات تلقائياً إذا لم تكن موجودة لمنع أي خطأ نهائياً
+# 1. التثبيت الإجباري أولاً وقبل أي شيء
 try:
     import moviepy
 except ImportError:
+    print("جاري تثبيت المكتبات المطلوبة...")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
     subprocess.check_call([sys.executable, "-m", "pip", "install", "moviepy", "Pillow", "google-api-python-client", "google-auth-oauthlib", "google-auth-httplib2"])
 
+import os
 import json
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
