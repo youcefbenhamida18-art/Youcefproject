@@ -1,7 +1,7 @@
 import os
 import random
 from PIL import Image, ImageDraw
-from moviepy.editor import ImageClip
+from moviepy import ImageClip
 
 CONTENT_CATEGORIES = {
     "riddles": [
@@ -19,9 +19,9 @@ def create_video_frame(question, answer):
     image = Image.new("RGB", (width, height), color=(20, 24, 33))
     draw = ImageDraw.Draw(image)
     
-    draw.text((100, 700), "DAILY TRIVIA & RIDDLES", fill=(255, 204, 0), font_size=50)
-    draw.text((100, 900), f"Q: {question}", fill=(255, 255, 255), font_size=40)
-    draw.text((100, 1100), f"Ans: {answer}", fill=(0, 255, 128), font_size=45)
+    draw.text((100, 700), "DAILY TRIVIA & RIDDLES", fill=(255, 204, 0))
+    draw.text((100, 900), f"Q: {question}", fill=(255, 255, 255))
+    draw.text((100, 1100), f"Ans: {answer}", fill=(0, 255, 128))
     
     frame_path = "temp_frame.png"
     image.save(frame_path)
