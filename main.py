@@ -36,7 +36,8 @@ def generate_short_video():
     
     frame_path = create_video_frame(item['q'], item['ans'])
     
-    clip = ImageClip(frame_path).set_duration(5)
+    # Using the correct modern method .with_duration instead of .set_duration
+    clip = ImageClip(frame_path).with_duration(5)
     video_output = "output_short.mp4"
     clip.write_videofile(video_output, fps=24, codec="libx264", audio=False)
     
